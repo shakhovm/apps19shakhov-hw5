@@ -37,8 +37,8 @@ public class AsIntStreamTest {
     @Test(expected = IllegalArgumentException.class)
     public void min() {
         int realValue = mainStream.filter(x -> x > 3).flatMap(x ->
-                AsIntStream.of(x -1 , x, x + 1)).max();
-        int expectedValue = 8;
+                AsIntStream.of(x -1 , x, x + 1)).min();
+        int expectedValue = 3;
         assertEquals(expectedValue, realValue);
         realValue = mainStream.min();
     }

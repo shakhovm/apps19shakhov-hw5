@@ -64,7 +64,7 @@ public class AsIntStream implements IntStream {
                 key = value;
             }
         }
-        return keyValue;
+        return key;
     }
 
     @Override
