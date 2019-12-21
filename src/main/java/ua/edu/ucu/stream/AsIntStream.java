@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AsIntStream implements IntStream {
 
-    Iterator<Integer> iter;
+    private Iterator<Integer> iter;
 
     private AsIntStream() { }
 
@@ -47,20 +47,21 @@ public class AsIntStream implements IntStream {
             }
 
         }
-        return (double)sum /counter;
+        return (double)sum/counter;
     }
 
     private Integer findValue(IntComparable comparable, int keyValue) {
         exceptionThrower();
+        int key = keyValue;
         while (iter.hasNext())
         {
             Integer value = iter.next();
             if (value == null) {
-                return keyValue;
+                return key;
             }
-            if (comparable.compare(value, keyValue))
+            if (comparable.compare(value, key))
             {
-                keyValue = value;
+                key = value;
             }
         }
         return keyValue;
@@ -132,15 +133,15 @@ public class AsIntStream implements IntStream {
 
     @Override
     public int reduce(int identity, IntBinaryOperator op) {
-
+        int initValue = identity;
         while (iter.hasNext()) {
             Integer x = iter.next();
             if (x != null) {
-                identity = op.apply(identity, x);
+                initValue = op.apply(initValue, x);
             }
 
         }
-        return identity;
+        return initValue;
     }
 
     public Iterator<Integer> toIter() {
